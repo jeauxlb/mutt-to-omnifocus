@@ -5,6 +5,7 @@ import os
 import getopt
 import email.parser
 import subprocess
+from email.header import decode_header
 
 def usage():
     print """
@@ -48,9 +49,12 @@ def parse_message(raw):
     #        ("Subject", message.get("Subject")),
             ("Message-ID", message.get("Message-ID"))]
     try:
-        pipe = subprocess.Popen(['/Users/joel/bin/item_name.sh', message.get("Subject")], stdout=subprocess.PIPE)
+        sub, encoding  = decode_header(message.get("Subject"))[0]
+
+        sub = sub.replace('\n', '');
+        pipe = subprocess.Popen(['/Users/joel/bin/item_name.sh', sub], stdout=subprocess.PIPE)
         subject, error = pipe.communicate()
-        list.append(["Subject", subject])
+        list.append(["Subject", subject.rstrip('\n')])
     except KeyboardInterrupt:
         print ""
         sys.exit()
