@@ -1,4 +1,4 @@
-#!/usr/local/Cellar/bash/4.3.46/bin/bash
+#!/usr/local/opt/bash/bin/bash
 
 RESET="\033[0m"
 BOLD="\033[1m"
